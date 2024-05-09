@@ -2,8 +2,6 @@ import streamlit as st
 import seaborn as sns
 from googletrans import Translator
 import matplotlib.pyplot as plt
-import pickle
-import joblib
 
 def translate_text(text, target_language='id'):
     translator = Translator()
@@ -22,9 +20,13 @@ def distribution(df):
 
     translate = st.checkbox("Translate to Indonesia")
     text = (""" 
-        The visualization above shows the distribution of release years of Korean dramas. This diagram is a horizontal histogram with year of release on the x-axis and the number of Korean dramas released each year on the y-axis.
-        Based on the visualization results according to the year of Korean drama release, the Korean drama industry has experienced significant growth in the last few years, namely there was a significant increase after 2010. Based on the visualization above, it can be seen that 2020 and 2022 have the highest number of Korean dramas. released a lot, with a total of 30 and 35 Korean dramas. Followed by 2012 and 2015 which had the same number of dramas, namely 25 Korean dramas. Meanwhile, 2002 had the least number of dramas, namely 5 dramas and this trend shows that Korean dramas are increasingly popular throughout the world. Fluctuations in the number of Korean dramas released each year are likely caused by various factors. In addition, the years 2002, 2005, 2007, and 2010 also showed a slight decrease in the number of Korean dramas released.    
-    """)
+        This bar graph compares gender population percentages by region. The graph is divided into four bars viz
+
+        The southwest has a population of more women than men, namely women 64.4% and men 35.4%
+        Southeast has a population of more men than women, namely men 70.6% and women 29.6%
+        The northwest has a population of more women than men, namely women 80.1% and men 19.9%
+        The northeast has a population of more men than women, namely men 84.7% and women 15.3%
+        """)
     if translate:
         translated_text = translate_text(text)
         if translated_text:
@@ -41,9 +43,27 @@ def distribution(df):
 
     translate = st.checkbox("Translate to Indonesia (Age)")
     text = (""" 
-        The visualization above shows the distribution of release years of Korean dramas. This diagram is a horizontal histogram with year of release on the x-axis and the number of Korean dramas released each year on the y-axis.
-        Based on the visualization results according to the year of Korean drama release, the Korean drama industry has experienced significant growth in the last few years, namely there was a significant increase after 2010. Based on the visualization above, it can be seen that 2020 and 2022 have the highest number of Korean dramas. released a lot, with a total of 30 and 35 Korean dramas. Followed by 2012 and 2015 which had the same number of dramas, namely 25 Korean dramas. Meanwhile, 2002 had the least number of dramas, namely 5 dramas and this trend shows that Korean dramas are increasingly popular throughout the world. Fluctuations in the number of Korean dramas released each year are likely caused by various factors. In addition, the years 2002, 2005, 2007, and 2010 also showed a slight decrease in the number of Korean dramas released.    
-    """)
+        This graph distributes the age distribution of the city's population concentrated in the 30-50 year age group. This age group reaches the highest frequency, namely around 60%. Age groups under 30 years and over 50 years have a lower frequency. The age group under 20 years only reaches a frequency of around 10%, while the age group over 60 years only reaches a frequency of around 20%.
+        """)
+    if translate:
+        translated_text = translate_text(text)
+        if translated_text:
+            text = translated_text
+    st.markdown(text)
+
+    fig, ax = plt.subplots()
+    colors = ['#ab53d9', '#81d953']
+    sns.countplot(x='Gender', hue='smoker', data=df, palette=colors)
+    plt.title('Frekuensi Smoker Berdasarkan Gender')
+    plt.xlabel('Gender')
+    plt.ylabel('Frekuensi')
+    
+    st.pyplot(fig)
+
+    translate = st.checkbox("Translate to Indonesia (Smoker)")
+    text = (""" 
+        This bar graph shows the frequency of smoking by gender in a population, it can be divided into two bars, one for women and one for men. In the bar graph of women, it can be seen that there are more non-smokers than smokers. Likewise, in the bar graph, men who do not smoke are more dominant than smokers. So it can be concluded that there is a small difference between the frequency of non-smoking for women and men. Women are slightly more likely to not smoke than men, with a percentage of 50.8% compared to 49.2%.
+        """)
     if translate:
         translated_text = translate_text(text)
         if translated_text:
@@ -65,16 +85,8 @@ def comparison(df):
 
     translate = st.checkbox("Translate to Indonesia")
     text = (""" 
-        The visualization above shows the popularity trend of Korean dramas over several years. This diagram is a horizontal histogram with release year on the x-axis and ratings of Korean dramas released each year on the y-axis.
-        Based on the visualization above, we can see that the popularity of Korean dramas continues to increase from 2002 to 2022. This trend shows that Korean dramas are becoming increasingly popular every year.
-        From the visualization above, it is found that:
-
-        1. 2016 and 2022 have the highest popularity of Korean dramas, with an average rating of 8.6.
-        2. 2015 and 2020 were in second place with an average rating of 8.5.
-        3. 2002 had the lowest popularity of Korean dramas, with an average rating of 8.3.
-        4. 2003 and 2004 had the same drama popularity, namely with an average rating of 8.4.
-            
-        By looking at the popularity trend of Korean dramas, we can make decisions about producing or watching Korean dramas with genres that are popular that year.""")
+        This graph shows the total number of men and women who took driving tests. Women have a higher overall pass rate than men in driving tests.
+    """)
     if translate:
         translated_text = translate_text(text)
         if translated_text:
@@ -91,16 +103,8 @@ def comparison(df):
 
     translate = st.checkbox("Translate to Indonesia (BMI and Children)")
     text = (""" 
-        The visualization above shows the popularity trend of Korean dramas over several years. This diagram is a horizontal histogram with release year on the x-axis and ratings of Korean dramas released each year on the y-axis.
-        Based on the visualization above, we can see that the popularity of Korean dramas continues to increase from 2002 to 2022. This trend shows that Korean dramas are becoming increasingly popular every year.
-        From the visualization above, it is found that:
-
-        1. 2016 and 2022 have the highest popularity of Korean dramas, with an average rating of 8.6.
-        2. 2015 and 2020 were in second place with an average rating of 8.5.
-        3. 2002 had the lowest popularity of Korean dramas, with an average rating of 8.3.
-        4. 2003 and 2004 had the same drama popularity, namely with an average rating of 8.4.
-            
-        By looking at the popularity trend of Korean dramas, we can make decisions about producing or watching Korean dramas with genres that are popular that year.""")
+            This line graph compares average height by gender and number of children. The average height of women is consistently higher than the average height of men at all values for the number of children. The average height level for women decreases as the number of children increases.
+            """)
     if translate:
         translated_text = translate_text(text)
         if translated_text:
@@ -118,16 +122,9 @@ def comparison(df):
 
     translate = st.checkbox("Translate to Indonesia (BMI and Smoker)")
     text = (""" 
-        The visualization above shows the popularity trend of Korean dramas over several years. This diagram is a horizontal histogram with release year on the x-axis and ratings of Korean dramas released each year on the y-axis.
-        Based on the visualization above, we can see that the popularity of Korean dramas continues to increase from 2002 to 2022. This trend shows that Korean dramas are becoming increasingly popular every year.
-        From the visualization above, it is found that:
-
-        1. 2016 and 2022 have the highest popularity of Korean dramas, with an average rating of 8.6.
-        2. 2015 and 2020 were in second place with an average rating of 8.5.
-        3. 2002 had the lowest popularity of Korean dramas, with an average rating of 8.3.
-        4. 2003 and 2004 had the same drama popularity, namely with an average rating of 8.4.
-            
-        By looking at the popularity trend of Korean dramas, we can make decisions about producing or watching Korean dramas with genres that are popular that year.""")
+            This bar graph compares the percentage of people who smoke by gender. The graph is divided into two bars, one for women and one for men. The graph shows that the majority of smokers are women, namely 50.8% of smokers, with a slightly higher percentage than men, namely 49.2% of smokers.
+            """)
+        
     if translate:
         translated_text = translate_text(text)
         if translated_text:
@@ -147,16 +144,8 @@ def composition(df):
 
     translate = st.checkbox("Translate to Indonesia")
     text = (""" 
-        Based on the visualization above, the following results are obtained.
-
-        1. The distribution of Korean drama ratings is uneven.
-        2. There are many Korean dramas with a rating of 8.0 to 8.5.
-        3. The number of Korean dramas with ratings of 7.0 and 10.0 is relatively fewer.
-        4. There has been an increasing trend in the number of Korean dramas with high ratings (8.5 - 10.0) in recent years. This shows that the overall quality of Korean dramas is increasing.
-        5. We can also see that the number of Korean dramas with ratings of 9.1 and 9.0 is quite high, namely 9 and 8 dramas. This shows that Korean dramas with high ratings are still popular today.
-        
-        By looking at the distribution trend of Korean drama ratings, we can make decisions about producing or watching Korean dramas that are relevant to that rating. This can help us understand trends among our audience and maximize opportunities to take advantage of those trends.
-            """)
+        This pie chart shows the proportion of men and women presented in a circular graph. Of which 50.8% are women and 49.2% are men.
+        """)
     if translate:
         translated_text = translate_text(text)
         if translated_text:
@@ -171,16 +160,11 @@ def composition(df):
 
     translate = st.checkbox("Translate to Indonesia (Region)")
     text = (""" 
-        Based on the visualization above, the following results are obtained.
+        This diagram shows the percentage of population living in each region of the United States which is divided into four parts.
 
-        1. The distribution of Korean drama ratings is uneven.
-        2. There are many Korean dramas with a rating of 8.0 to 8.5.
-        3. The number of Korean dramas with ratings of 7.0 and 10.0 is relatively fewer.
-        4. There has been an increasing trend in the number of Korean dramas with high ratings (8.5 - 10.0) in recent years. This shows that the overall quality of Korean dramas is increasing.
-        5. We can also see that the number of Korean dramas with ratings of 9.1 and 9.0 is quite high, namely 9 and 8 dramas. This shows that Korean dramas with high ratings are still popular today.
-        
-        By looking at the distribution trend of Korean drama ratings, we can make decisions about producing or watching Korean dramas that are relevant to that rating. This can help us understand trends among our audience and maximize opportunities to take advantage of those trends.
-            """)
+        The Southeast is the largest population section in the diagram, representing 28.8% of the population
+        The North East, North West and Southwest have the same population in the diagram, representing 23.7% of the population.
+        """)
     if translate:
         translated_text = translate_text(text)
         if translated_text:
@@ -197,16 +181,8 @@ def composition(df):
 
     translate = st.checkbox("Translate to Indonesia (Smoker)")
     text = (""" 
-        Based on the visualization above, the following results are obtained.
-
-        1. The distribution of Korean drama ratings is uneven.
-        2. There are many Korean dramas with a rating of 8.0 to 8.5.
-        3. The number of Korean dramas with ratings of 7.0 and 10.0 is relatively fewer.
-        4. There has been an increasing trend in the number of Korean dramas with high ratings (8.5 - 10.0) in recent years. This shows that the overall quality of Korean dramas is increasing.
-        5. We can also see that the number of Korean dramas with ratings of 9.1 and 9.0 is quite high, namely 9 and 8 dramas. This shows that Korean dramas with high ratings are still popular today.
-        
-        By looking at the distribution trend of Korean drama ratings, we can make decisions about producing or watching Korean dramas that are relevant to that rating. This can help us understand trends among our audience and maximize opportunities to take advantage of those trends.
-            """)
+        This chart shows the percentage of people who smoke in the United States. The larger part of the diagram shows the number of non-smokers, who represent 72.9% of the population. Meanwhile, the smaller diagram shows the number of people who smoke, which represents 27.1% of the population. So it can be seen that the majority of the United States population does not smoke.
+        """)
     if translate:
         translated_text = translate_text(text)
         if translated_text:
@@ -223,14 +199,10 @@ def relationship(df):
 
     translate = st.checkbox("Translate to Indonesia")
     text = (""" 
-        From this visualization, we can see that Korean dramas released in 2017.5 have the highest rating with an average of 8.8. Apart from that, we can also see that Korean dramas released in the years 2015.0, 2017.5, and 2022.5 have a higher average rating compared to other years. This shows that Korean drama producers produced more dramas with higher ratings in those years.
-        We can also see that the years 2002.5, 2005.0, 2007.5, and 2010.0 have lower average ratings compared to other years. This shows that Korean drama producers produced fewer dramas with higher ratings in those years.
-            """)
+        Each dot represents one person, with age plotted on the X-axis and salary plotted on the Y-axis. The color of the dot indicates the person's gender: blue for women and orange for men. The scatter plot shows that there is a positive correlation between age and salary for both genders. This means that in general, the older the person, the higher the salary.
+        """)
     if translate:
         translated_text = translate_text(text)
         if translated_text:
             text = translated_text
     st.markdown(text)
-
-def predict(df):
-    st.title("TTT")
