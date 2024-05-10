@@ -85,7 +85,7 @@ def comparison(df):
 
     translate = st.checkbox("Translate to Indonesia")
     text = (""" 
-        This graph shows the total number of men and women who took driving tests. Women have a higher overall pass rate than men in driving tests.
+        This graph shows the total number of men and women who took driving tests. Men have a higher overall pass rate than women in driving tests.
     """)
     if translate:
         translated_text = translate_text(text)

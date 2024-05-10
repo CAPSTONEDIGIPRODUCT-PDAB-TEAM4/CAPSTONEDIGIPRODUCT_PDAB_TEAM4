@@ -1,9 +1,11 @@
 import streamlit as st
 import pandas as pd
 import pickle
+import joblib
 
 from streamlit_option_menu import *
 from function import *
+from gnb import pipeline_gnb
 
 URL = 'gender_equality_final.csv'
 df1 = pd.read_csv(URL)
@@ -58,8 +60,10 @@ if selected == '📋 Gender Equality Analysis':
     st.write("This app predicts the gender based on user input.")
     st.header("Gender Prediction")
 
-    with open('gnb_fit.pkl', 'rb') as f:
-        clf = pickle.load(f)  # Mengambil model dari file gnb_fit.pkl
+    joblib.dump(pipeline_gnb, 'gnb.pkl')
+
+    with open('gnb.pkl', 'rb') as f:
+        clf = joblib.load(f)
 
     age = st.slider('Age', 0, 100, 20)
     age_category = st.selectbox('Age Category', ['Child', 'Young Adults', 'Middle-aged Adults', 'Old-aged Adults'])
@@ -99,8 +103,9 @@ if selected == '📋 Gender Equality Analysis':
 
     if st.button("Predict"):
         if predict_gender[0] == 0:
-            msg = 'Female'
+            msg = 'The predicted gender is Female.'
         else:
-            msg = 'Male'
+            msg = 'The predicted gender is Male.'
+
 
         prediction_state.markdown(msg)
