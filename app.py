@@ -30,10 +30,10 @@ if selected == '👩‍🚀 Introducing':
     st.markdown(text)
 
     st.header("Gender Equality Dataset That Has Not Been Cleaned")
-    st.write(df1)
+    st.write(df)
 
     st.header("Gender Equality Dataset That Has Been Cleaned")
-    st.write(df)
+    st.write(df1)
 
 if selected == '📊 Visualization':
     st.title("Visualization of Gender Equality Analysis")
